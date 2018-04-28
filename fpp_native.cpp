@@ -1065,9 +1065,9 @@ static void fp_from_pack (fpdata *src, uae_u32 *wrd, int kfactor)
 
 	wrd[0] = wrd[1] = wrd[2] = 0;
 
-	fpp_to_native(&fp, src);
+	fp_to_native(&fp, src);
 
-#if USE_LONG_DOUBLE
+#ifdef USE_LONG_DOUBLE
 	sprintf (str, "%#.17Le", fp);
 #else
 	sprintf (str, "%#.17e", fp);
@@ -1241,12 +1241,12 @@ static void fp_to_pack (fpdata *fpd, uae_u32 *wrd, int dummy)
 	*cp++ = ((wrd[0] >> 20) & 0xf) + '0';
 	*cp++ = ((wrd[0] >> 16) & 0xf) + '0';
 	*cp = 0;
-#if USE_LONG_DOUBLE
+#ifdef USE_LONG_DOUBLE
 	sscanf (str, "%Le", &d);
 #else
 	sscanf (str, "%le", &d);
 #endif
-	fpp_from_native(d, fpd);
+	fp_from_native(d, fpd);
 }
 
 
@@ -1268,9 +1268,6 @@ void fp_init_native(void)
 	fpp_get_status = fp_get_status;
 	fpp_clear_status = fp_clear_status;
 	fpp_set_mode = fp_set_mode;
-
-	fpp_from_native = fp_from_native;
-	fpp_to_native = fp_to_native;
 
 	fpp_to_int = fp_to_int;
 	fpp_from_int = fp_from_int;
