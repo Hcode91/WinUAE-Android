@@ -42420,7 +42420,9 @@ uae_u32 REGPARAM2 op_4e73_11_ff(uae_u32 opcode)
 	}
 	newsr = sr; newpc = pc;
 	m68k_setpci_j(newpc);
+	#ifdef DEBUGGER
 	branch_stack_pop_rte(oldpc);
+	#endif
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
@@ -42521,9 +42523,11 @@ uae_u32 REGPARAM2 op_4e75_11_ff(uae_u32 opcode)
 	}
 	m68k_areg(regs, 7) += 4;
 	m68k_setpci_j(newpc);
+	#ifdef DEBUGGER
 	if (debugmem_trace) {
 		branch_stack_pop_rts(oldpc);
 	}
+	#endif
 	if (m68k_getpci() & 1) {
 		uaecptr faultpc = m68k_getpci();
 		m68k_setpci_j(oldpc);
@@ -42762,9 +42766,11 @@ uae_u32 REGPARAM2 op_4e90_11_ff(uae_u32 opcode)
 		exception2_write(opcode, dsta + 2, 0x1, nextpc, 1);
 		return 12 * CYCLE_UNIT / 2 + count_cycles;
 	}
+	#ifdef DEBUGGER
 	if (debugmem_trace) {
 		branch_stack_push(oldpc, nextpc);
 	}
+	#endif
 	regs.ir = regs.irc;
 	opcode = regs.ir;
 	get_word_000_prefetch(2);
@@ -42821,9 +42827,11 @@ uae_u32 REGPARAM2 op_4ea8_11_ff(uae_u32 opcode)
 		exception2_write(opcode, dsta + 2, 0x1, nextpc, 1);
 		return 14 * CYCLE_UNIT / 2 + count_cycles;
 	}
+	#ifdef DEBUGGER
 	if (debugmem_trace) {
 		branch_stack_push(oldpc, nextpc);
 	}
+	#endif
 	regs.ir = regs.irc;
 	opcode = regs.ir;
 	get_word_000_prefetch(2);
@@ -42886,9 +42894,11 @@ uae_u32 REGPARAM2 op_4eb0_11_ff(uae_u32 opcode)
 		exception2_write(opcode, dsta + 2, 0x1, nextpc, 1);
 		return 18 * CYCLE_UNIT / 2 + count_cycles;
 	}
+	#ifdef DEBUGGER
 	if (debugmem_trace) {
 		branch_stack_push(oldpc, nextpc);
 	}
+	#endif
 	regs.ir = regs.irc;
 	opcode = regs.ir;
 	get_word_000_prefetch(2);
@@ -42943,9 +42953,11 @@ uae_u32 REGPARAM2 op_4eb8_11_ff(uae_u32 opcode)
 		exception2_write(opcode, dsta + 2, 0x1, nextpc, 1);
 		return 14 * CYCLE_UNIT / 2 + count_cycles;
 	}
+	#ifdef DEBUGGER
 	if (debugmem_trace) {
 		branch_stack_push(oldpc, nextpc);
 	}
+	#endif
 	regs.ir = regs.irc;
 	opcode = regs.ir;
 	get_word_000_prefetch(2);
@@ -43005,9 +43017,11 @@ uae_u32 REGPARAM2 op_4eb9_11_ff(uae_u32 opcode)
 		exception2_write(opcode, dsta + 2, 0x1, nextpc, 1);
 		return 16 * CYCLE_UNIT / 2 + count_cycles;
 	}
+	#ifdef DEBUGGER
 	if (debugmem_trace) {
 		branch_stack_push(oldpc, nextpc);
 	}
+	#endif
 	regs.ir = regs.irc;
 	opcode = regs.ir;
 	get_word_000_prefetch(2);
@@ -43063,9 +43077,11 @@ uae_u32 REGPARAM2 op_4eba_11_ff(uae_u32 opcode)
 		exception2_write(opcode, dsta + 2, 0x1, nextpc, 1);
 		return 14 * CYCLE_UNIT / 2 + count_cycles;
 	}
+	#ifdef DEBUGGER
 	if (debugmem_trace) {
 		branch_stack_push(oldpc, nextpc);
 	}
+	#endif
 	regs.ir = regs.irc;
 	opcode = regs.ir;
 	get_word_000_prefetch(2);
@@ -43127,9 +43143,11 @@ uae_u32 REGPARAM2 op_4ebb_11_ff(uae_u32 opcode)
 		exception2_write(opcode, dsta + 2, 0x1, nextpc, 1);
 		return 18 * CYCLE_UNIT / 2 + count_cycles;
 	}
+	#ifdef DEBUGGER
 	if (debugmem_trace) {
 		branch_stack_push(oldpc, nextpc);
 	}
+	#endif
 	regs.ir = regs.irc;
 	opcode = regs.ir;
 	get_word_000_prefetch(2);
@@ -52738,9 +52756,11 @@ uae_u32 REGPARAM2 op_6100_11_ff(uae_u32 opcode)
 		return 6 * CYCLE_UNIT / 2 + count_cycles;
 	}
 	m68k_incpci(s);
+	#ifdef DEBUGGER
 	if (debugmem_trace) {
 		branch_stack_push(oldpc, nextpc);
 	}
+	#endif
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
@@ -52794,9 +52814,11 @@ uae_u32 REGPARAM2 op_6101_11_ff(uae_u32 opcode)
 		return 6 * CYCLE_UNIT / 2 + count_cycles;
 	}
 	m68k_incpci(s);
+	#ifdef DEBUGGER
 	if (debugmem_trace) {
 		branch_stack_push(oldpc, nextpc);
 	}
+	#endif
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
@@ -52848,9 +52870,11 @@ uae_u32 REGPARAM2 op_61ff_11_ff(uae_u32 opcode)
 		return 6 * CYCLE_UNIT / 2 + count_cycles;
 	}
 	m68k_incpci(s);
+	#ifdef DEBUGGER
 	if (debugmem_trace) {
 		branch_stack_push(oldpc, nextpc);
 	}
+	#endif
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
@@ -122078,7 +122102,9 @@ uae_u32 REGPARAM2 op_4e73_12_ff(uae_u32 opcode)
 	}
 	m68k_setpci_j(pc);
 	opcode |= 0x20000;
+	#ifdef DEBUGGER
 	branch_stack_pop_rte(oldpc);
+	#endif
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
@@ -122124,9 +122150,11 @@ uae_u32 REGPARAM2 op_4e75_12_ff(uae_u32 opcode)
 	}
 	m68k_areg(regs, 7) += 4;
 	m68k_setpci_j(newpc);
+	#ifdef DEBUGGER
 	if (debugmem_trace) {
 		branch_stack_pop_rts(oldpc);
 	}
+	#endif
 	if (m68k_getpci() & 1) {
 		uaecptr faultpc = m68k_getpci();
 		m68k_setpci_j(oldpc);
@@ -122310,9 +122338,11 @@ uae_u32 REGPARAM2 op_4e90_12_ff(uae_u32 opcode)
 		exception2_write(opcode, dsta + 2, 0x1, nextpc, 1);
 		return 12 * CYCLE_UNIT / 2 + count_cycles;
 	}
+	#ifdef DEBUGGER
 	if (debugmem_trace) {
 		branch_stack_push(oldpc, nextpc);
 	}
+	#endif
 	regs.ir = regs.irc;
 	opcode = regs.ir;
 	get_word_000_prefetch(2);
@@ -122369,9 +122399,11 @@ uae_u32 REGPARAM2 op_4ea8_12_ff(uae_u32 opcode)
 		exception2_write(opcode, dsta + 2, 0x1, nextpc, 1);
 		return 14 * CYCLE_UNIT / 2 + count_cycles;
 	}
+	#ifdef DEBUGGER
 	if (debugmem_trace) {
 		branch_stack_push(oldpc, nextpc);
 	}
+	#endif
 	regs.ir = regs.irc;
 	opcode = regs.ir;
 	if(regs.t1) opcode |= 0x10000;
@@ -122435,9 +122467,11 @@ uae_u32 REGPARAM2 op_4eb0_12_ff(uae_u32 opcode)
 		exception2_write(opcode, dsta + 2, 0x1, nextpc, 1);
 		return 18 * CYCLE_UNIT / 2 + count_cycles;
 	}
+	#ifdef DEBUGGER
 	if (debugmem_trace) {
 		branch_stack_push(oldpc, nextpc);
 	}
+	#endif
 	regs.ir = regs.irc;
 	opcode = regs.ir;
 	if(regs.t1) opcode |= 0x10000;
@@ -122493,9 +122527,11 @@ uae_u32 REGPARAM2 op_4eb8_12_ff(uae_u32 opcode)
 		exception2_write(opcode, dsta + 2, 0x1, nextpc, 1);
 		return 14 * CYCLE_UNIT / 2 + count_cycles;
 	}
+	#ifdef DEBUGGER
 	if (debugmem_trace) {
 		branch_stack_push(oldpc, nextpc);
 	}
+	#endif
 	regs.ir = regs.irc;
 	opcode = regs.ir;
 	if(regs.t1) opcode |= 0x10000;
@@ -122556,9 +122592,11 @@ uae_u32 REGPARAM2 op_4eb9_12_ff(uae_u32 opcode)
 		exception2_write(opcode, dsta + 2, 0x1, nextpc, 1);
 		return 16 * CYCLE_UNIT / 2 + count_cycles;
 	}
+	#ifdef DEBUGGER
 	if (debugmem_trace) {
 		branch_stack_push(oldpc, nextpc);
 	}
+	#endif
 	regs.ir = regs.irc;
 	opcode = regs.ir;
 	if(regs.t1) opcode |= 0x10000;
@@ -122615,9 +122653,11 @@ uae_u32 REGPARAM2 op_4eba_12_ff(uae_u32 opcode)
 		exception2_write(opcode, dsta + 2, 0x1, nextpc, 1);
 		return 14 * CYCLE_UNIT / 2 + count_cycles;
 	}
+	#ifdef DEBUGGER
 	if (debugmem_trace) {
 		branch_stack_push(oldpc, nextpc);
 	}
+	#endif
 	regs.ir = regs.irc;
 	opcode = regs.ir;
 	if(regs.t1) opcode |= 0x10000;
@@ -122680,9 +122720,11 @@ uae_u32 REGPARAM2 op_4ebb_12_ff(uae_u32 opcode)
 		exception2_write(opcode, dsta + 2, 0x1, nextpc, 1);
 		return 18 * CYCLE_UNIT / 2 + count_cycles;
 	}
+	#ifdef DEBUGGER
 	if (debugmem_trace) {
 		branch_stack_push(oldpc, nextpc);
 	}
+	#endif
 	regs.ir = regs.irc;
 	opcode = regs.ir;
 	if(regs.t1) opcode |= 0x10000;
@@ -132021,9 +132063,11 @@ uae_u32 REGPARAM2 op_6100_12_ff(uae_u32 opcode)
 		exception3_read_prefetch(opcode, addr);
 		return 10 * CYCLE_UNIT / 2 + count_cycles;
 	}
+	#ifdef DEBUGGER
 	if (debugmem_trace) {
 		branch_stack_push(oldpc, nextpc);
 	}
+	#endif
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
@@ -132080,9 +132124,11 @@ uae_u32 REGPARAM2 op_6101_12_ff(uae_u32 opcode)
 		exception3_read_prefetch(opcode, addr);
 		return 10 * CYCLE_UNIT / 2 + count_cycles;
 	}
+	#ifdef DEBUGGER
 	if (debugmem_trace) {
 		branch_stack_push(oldpc, nextpc);
 	}
+	#endif
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
@@ -132137,9 +132183,11 @@ uae_u32 REGPARAM2 op_61ff_12_ff(uae_u32 opcode)
 		exception3_read_prefetch(opcode, addr);
 		return 10 * CYCLE_UNIT / 2 + count_cycles;
 	}
+	#ifdef DEBUGGER
 	if (debugmem_trace) {
 		branch_stack_push(oldpc, nextpc);
 	}
+	#endif
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
