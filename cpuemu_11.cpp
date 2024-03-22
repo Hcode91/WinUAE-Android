@@ -42423,10 +42423,11 @@ uae_u32 REGPARAM2 op_4e73_11_ff(uae_u32 opcode)
 	#ifdef DEBUGGER
 	branch_stack_pop_rte(oldpc);
 	#endif
+	int pcadjust = oldpc - m68k_getpci() + 2;
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc - m68k_getpci() + 2;
+		pcoffset += pcadjust;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 20 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -42435,7 +42436,6 @@ uae_u32 REGPARAM2 op_4e73_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(2);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc - m68k_getpci() + 2;
 		exception2_fetch_opcode(opcode, 2, pcoffset);
 		return 24 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -42535,10 +42535,11 @@ uae_u32 REGPARAM2 op_4e75_11_ff(uae_u32 opcode)
 		exception3_read_prefetch_only(opcode, faultpc);
 		return 8 * CYCLE_UNIT / 2 + count_cycles;
 	}
+	int pcadjust = oldpc - m68k_getpci() + 2;
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc - m68k_getpci() + 2;
+		pcoffset += pcadjust;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 12 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -42547,7 +42548,6 @@ uae_u32 REGPARAM2 op_4e75_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(2);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc - m68k_getpci() + 2;
 		exception2_fetch_opcode(opcode, 2, pcoffset);
 		return 16 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -42633,10 +42633,11 @@ uae_u32 REGPARAM2 op_4e77_11_ff(uae_u32 opcode)
 		exception3_read_prefetch_only(opcode, faultpc);
 		return 12 * CYCLE_UNIT / 2 + count_cycles;
 	}
+	int pcadjust = oldpc - m68k_getpci() + 2;
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc - m68k_getpci() + 2;
+		pcoffset += pcadjust;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 16 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -42645,7 +42646,6 @@ uae_u32 REGPARAM2 op_4e77_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(2);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc - m68k_getpci() + 2;
 		exception2_fetch_opcode(opcode, 2, pcoffset);
 		return 20 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -42743,6 +42743,7 @@ uae_u32 REGPARAM2 op_4e90_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
+		pcoffset = oldpc + 2;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 4 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -42776,7 +42777,7 @@ uae_u32 REGPARAM2 op_4e90_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(2);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		exception2_fetch_opcode(0, 2, 0);
+		exception2_fetch_opcode(opcode, 2, 0);
 		return 16 * CYCLE_UNIT / 2 + count_cycles;
 	}
 	return 16 * CYCLE_UNIT / 2 + count_cycles;
@@ -42804,6 +42805,7 @@ uae_u32 REGPARAM2 op_4ea8_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
+		pcoffset = oldpc + 4;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 6 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -42871,6 +42873,7 @@ uae_u32 REGPARAM2 op_4eb0_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
+		pcoffset = oldpc + 4;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 10 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -42930,6 +42933,7 @@ uae_u32 REGPARAM2 op_4eb8_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
+		pcoffset = oldpc + 4;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 6 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -42994,6 +42998,7 @@ uae_u32 REGPARAM2 op_4eb9_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
+		pcoffset = oldpc + 6;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 8 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -43054,6 +43059,7 @@ uae_u32 REGPARAM2 op_4eba_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
+		pcoffset = oldpc + 4;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 6 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -43120,6 +43126,7 @@ uae_u32 REGPARAM2 op_4ebb_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
+		pcoffset = oldpc + 4;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 10 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -43169,6 +43176,7 @@ uae_u32 REGPARAM2 op_4ed0_11_ff(uae_u32 opcode)
 	uae_u32 srcreg = (real_opcode & 7);
 	uaecptr srca;
 	srca = m68k_areg(regs, srcreg);
+	uaecptr oldpc = m68k_getpci();
 	if (srca & 1) {
 		m68k_incpci(2);
 		exception3_read_prefetch_only(opcode, srca);
@@ -43178,7 +43186,8 @@ uae_u32 REGPARAM2 op_4ed0_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		exception2_fetch_opcode(opcode, 0, 0);
+		pcoffset = oldpc + 2;
+		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 4 * CYCLE_UNIT / 2 + count_cycles;
 	}
 	regs.ir = regs.irc;
@@ -43186,7 +43195,7 @@ uae_u32 REGPARAM2 op_4ed0_11_ff(uae_u32 opcode)
 	opcode = regs.ir;
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		exception2_fetch_opcode(0, 2, 0);
+		exception2_fetch_opcode(opcode, 2, 0);
 		return 8 * CYCLE_UNIT / 2 + count_cycles;
 	}
 	return 8 * CYCLE_UNIT / 2 + count_cycles;
@@ -43202,6 +43211,7 @@ uae_u32 REGPARAM2 op_4ee8_11_ff(uae_u32 opcode)
 	uae_u32 srcreg = (real_opcode & 7);
 	uaecptr srca;
 	srca = m68k_areg(regs, srcreg) + (uae_s32)(uae_s16)regs.irc;
+	uaecptr oldpc = m68k_getpci();
 	if (srca & 1) {
 		count_cycles += 2 * CYCLE_UNIT / 2;
 		m68k_incpci(2);
@@ -43212,7 +43222,8 @@ uae_u32 REGPARAM2 op_4ee8_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		exception2_fetch_opcode(opcode, 0, 0);
+		pcoffset = oldpc + 2;
+		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 6 * CYCLE_UNIT / 2 + count_cycles;
 	}
 	regs.ir = regs.irc;
@@ -43241,6 +43252,7 @@ uae_u32 REGPARAM2 op_4ef0_11_ff(uae_u32 opcode)
 		exception2_fetch_opcode(opcode, 2, 0);
 		return 4 * CYCLE_UNIT / 2 + count_cycles;
 	}
+	uaecptr oldpc = m68k_getpci();
 	if (srca & 1) {
 		count_cycles += 6 * CYCLE_UNIT / 2;
 		m68k_incpci(2);
@@ -43251,7 +43263,8 @@ uae_u32 REGPARAM2 op_4ef0_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		exception2_fetch_opcode(opcode, 0, 0);
+		pcoffset = oldpc + 2;
+		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 10 * CYCLE_UNIT / 2 + count_cycles;
 	}
 	regs.ir = regs.irc;
@@ -43273,6 +43286,7 @@ uae_u32 REGPARAM2 op_4ef8_11_ff(uae_u32 opcode)
 	int count_cycles = 0;
 	uaecptr srca;
 	srca = (uae_s32)(uae_s16)regs.irc;
+	uaecptr oldpc = m68k_getpci();
 	if (srca & 1) {
 		count_cycles += 2 * CYCLE_UNIT / 2;
 		m68k_incpci(2);
@@ -43283,7 +43297,8 @@ uae_u32 REGPARAM2 op_4ef8_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		exception2_fetch_opcode(opcode, 0, 0);
+		pcoffset = oldpc + 2;
+		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 6 * CYCLE_UNIT / 2 + count_cycles;
 	}
 	regs.ir = regs.irc;
@@ -43311,6 +43326,7 @@ uae_u32 REGPARAM2 op_4ef9_11_ff(uae_u32 opcode)
 		exception2_fetch(opcode, 4, -2);
 		return 4 * CYCLE_UNIT / 2 + count_cycles;
 	}
+	uaecptr oldpc = m68k_getpci();
 	if (srca & 1) {
 		m68k_incpci(2);
 		exception3_read_prefetch_only(opcode, srca);
@@ -43320,7 +43336,8 @@ uae_u32 REGPARAM2 op_4ef9_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		exception2_fetch_opcode(opcode, 0, 0);
+		pcoffset = oldpc + 2;
+		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 8 * CYCLE_UNIT / 2 + count_cycles;
 	}
 	regs.ir = regs.irc;
@@ -43343,6 +43360,7 @@ uae_u32 REGPARAM2 op_4efa_11_ff(uae_u32 opcode)
 	uaecptr srca;
 	srca = m68k_getpci() + 2;
 	srca += (uae_s32)(uae_s16)regs.irc;
+	uaecptr oldpc = m68k_getpci();
 	if (srca & 1) {
 		count_cycles += 2 * CYCLE_UNIT / 2;
 		m68k_incpci(2);
@@ -43353,7 +43371,8 @@ uae_u32 REGPARAM2 op_4efa_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		exception2_fetch_opcode(opcode, 0, 0);
+		pcoffset = oldpc + 2;
+		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 6 * CYCLE_UNIT / 2 + count_cycles;
 	}
 	regs.ir = regs.irc;
@@ -43381,6 +43400,7 @@ uae_u32 REGPARAM2 op_4efb_11_ff(uae_u32 opcode)
 		exception2_fetch_opcode(opcode, 2, 0);
 		return 4 * CYCLE_UNIT / 2 + count_cycles;
 	}
+	uaecptr oldpc = m68k_getpci();
 	if (srca & 1) {
 		count_cycles += 6 * CYCLE_UNIT / 2;
 		m68k_incpci(2);
@@ -43391,7 +43411,8 @@ uae_u32 REGPARAM2 op_4efb_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		exception2_fetch_opcode(opcode, 0, 0);
+		pcoffset = oldpc + 2;
+		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 10 * CYCLE_UNIT / 2 + count_cycles;
 	}
 	regs.ir = regs.irc;
@@ -52609,10 +52630,11 @@ uae_u32 REGPARAM2 op_6000_11_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -52621,7 +52643,6 @@ uae_u32 REGPARAM2 op_6000_11_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -52669,10 +52690,11 @@ uae_u32 REGPARAM2 op_6001_11_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -52681,7 +52703,6 @@ uae_u32 REGPARAM2 op_6001_11_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -52914,10 +52935,11 @@ uae_u32 REGPARAM2 op_6200_11_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -52926,7 +52948,6 @@ uae_u32 REGPARAM2 op_6200_11_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -52974,10 +52995,11 @@ uae_u32 REGPARAM2 op_6201_11_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -52986,7 +53008,6 @@ uae_u32 REGPARAM2 op_6201_11_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -53049,10 +53070,11 @@ uae_u32 REGPARAM2 op_6300_11_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -53061,7 +53083,6 @@ uae_u32 REGPARAM2 op_6300_11_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -53109,10 +53130,11 @@ uae_u32 REGPARAM2 op_6301_11_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -53121,7 +53143,6 @@ uae_u32 REGPARAM2 op_6301_11_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -53184,10 +53205,11 @@ uae_u32 REGPARAM2 op_6400_11_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -53196,7 +53218,6 @@ uae_u32 REGPARAM2 op_6400_11_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -53244,10 +53265,11 @@ uae_u32 REGPARAM2 op_6401_11_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -53256,7 +53278,6 @@ uae_u32 REGPARAM2 op_6401_11_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -53319,10 +53340,11 @@ uae_u32 REGPARAM2 op_6500_11_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -53331,7 +53353,6 @@ uae_u32 REGPARAM2 op_6500_11_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -53379,10 +53400,11 @@ uae_u32 REGPARAM2 op_6501_11_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -53391,7 +53413,6 @@ uae_u32 REGPARAM2 op_6501_11_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -53454,10 +53475,11 @@ uae_u32 REGPARAM2 op_6600_11_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -53466,7 +53488,6 @@ uae_u32 REGPARAM2 op_6600_11_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -53514,10 +53535,11 @@ uae_u32 REGPARAM2 op_6601_11_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -53526,7 +53548,6 @@ uae_u32 REGPARAM2 op_6601_11_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -53589,10 +53610,11 @@ uae_u32 REGPARAM2 op_6700_11_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -53601,7 +53623,6 @@ uae_u32 REGPARAM2 op_6700_11_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -53649,10 +53670,11 @@ uae_u32 REGPARAM2 op_6701_11_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -53661,7 +53683,6 @@ uae_u32 REGPARAM2 op_6701_11_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -53724,10 +53745,11 @@ uae_u32 REGPARAM2 op_6800_11_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -53736,7 +53758,6 @@ uae_u32 REGPARAM2 op_6800_11_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -53784,10 +53805,11 @@ uae_u32 REGPARAM2 op_6801_11_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -53796,7 +53818,6 @@ uae_u32 REGPARAM2 op_6801_11_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -53859,10 +53880,11 @@ uae_u32 REGPARAM2 op_6900_11_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -53871,7 +53893,6 @@ uae_u32 REGPARAM2 op_6900_11_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -53919,10 +53940,11 @@ uae_u32 REGPARAM2 op_6901_11_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -53931,7 +53953,6 @@ uae_u32 REGPARAM2 op_6901_11_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -53994,10 +54015,11 @@ uae_u32 REGPARAM2 op_6a00_11_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -54006,7 +54028,6 @@ uae_u32 REGPARAM2 op_6a00_11_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -54054,10 +54075,11 @@ uae_u32 REGPARAM2 op_6a01_11_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -54066,7 +54088,6 @@ uae_u32 REGPARAM2 op_6a01_11_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -54129,10 +54150,11 @@ uae_u32 REGPARAM2 op_6b00_11_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -54141,7 +54163,6 @@ uae_u32 REGPARAM2 op_6b00_11_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -54189,10 +54210,11 @@ uae_u32 REGPARAM2 op_6b01_11_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -54201,7 +54223,6 @@ uae_u32 REGPARAM2 op_6b01_11_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -54264,10 +54285,11 @@ uae_u32 REGPARAM2 op_6c00_11_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -54276,7 +54298,6 @@ uae_u32 REGPARAM2 op_6c00_11_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -54324,10 +54345,11 @@ uae_u32 REGPARAM2 op_6c01_11_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -54336,7 +54358,6 @@ uae_u32 REGPARAM2 op_6c01_11_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -54399,10 +54420,11 @@ uae_u32 REGPARAM2 op_6d00_11_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -54411,7 +54433,6 @@ uae_u32 REGPARAM2 op_6d00_11_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -54459,10 +54480,11 @@ uae_u32 REGPARAM2 op_6d01_11_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -54471,7 +54493,6 @@ uae_u32 REGPARAM2 op_6d01_11_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -54534,10 +54555,11 @@ uae_u32 REGPARAM2 op_6e00_11_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -54546,7 +54568,6 @@ uae_u32 REGPARAM2 op_6e00_11_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -54594,10 +54615,11 @@ uae_u32 REGPARAM2 op_6e01_11_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -54606,7 +54628,6 @@ uae_u32 REGPARAM2 op_6e01_11_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -54669,10 +54690,11 @@ uae_u32 REGPARAM2 op_6f00_11_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -54681,7 +54703,6 @@ uae_u32 REGPARAM2 op_6f00_11_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -54729,10 +54750,11 @@ uae_u32 REGPARAM2 op_6f01_11_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -54741,7 +54763,6 @@ uae_u32 REGPARAM2 op_6f01_11_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -122105,10 +122126,11 @@ uae_u32 REGPARAM2 op_4e73_12_ff(uae_u32 opcode)
 	#ifdef DEBUGGER
 	branch_stack_pop_rte(oldpc);
 	#endif
+	int pcadjust = oldpc - m68k_getpci() + 2;
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc - m68k_getpci() + 2;
+		pcoffset += pcadjust;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 16 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -122118,7 +122140,6 @@ uae_u32 REGPARAM2 op_4e73_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(2);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc - m68k_getpci() + 2;
 		exception2_fetch_opcode(opcode, 2, pcoffset);
 		return 20 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -122162,10 +122183,11 @@ uae_u32 REGPARAM2 op_4e75_12_ff(uae_u32 opcode)
 		exception3_read_prefetch_only(opcode, faultpc);
 		return 8 * CYCLE_UNIT / 2 + count_cycles;
 	}
+	int pcadjust = oldpc - m68k_getpci() + 2;
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc - m68k_getpci() + 2;
+		pcoffset += pcadjust;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 12 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -122175,7 +122197,6 @@ uae_u32 REGPARAM2 op_4e75_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(2);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc - m68k_getpci() + 2;
 		exception2_fetch_opcode(opcode, 2, pcoffset);
 		return 16 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -122274,10 +122295,11 @@ uae_u32 REGPARAM2 op_4e77_12_ff(uae_u32 opcode)
 		exception3_read_prefetch_only(opcode, faultpc);
 		return 12 * CYCLE_UNIT / 2 + count_cycles;
 	}
+	int pcadjust = oldpc - m68k_getpci() + 2;
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc - m68k_getpci() + 2;
+		pcoffset += pcadjust;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 16 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -122287,7 +122309,6 @@ uae_u32 REGPARAM2 op_4e77_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(2);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc - m68k_getpci() + 2;
 		exception2_fetch_opcode(opcode, 2, pcoffset);
 		return 20 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -122315,6 +122336,7 @@ uae_u32 REGPARAM2 op_4e90_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
+		pcoffset = oldpc + 2;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 4 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -122348,7 +122370,7 @@ uae_u32 REGPARAM2 op_4e90_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(2);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		exception2_fetch_opcode(0, 2, 0);
+		exception2_fetch_opcode(opcode, 2, 0);
 		return 16 * CYCLE_UNIT / 2 + count_cycles;
 	}
 	return 16 * CYCLE_UNIT / 2 + count_cycles;
@@ -122376,6 +122398,7 @@ uae_u32 REGPARAM2 op_4ea8_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
+		pcoffset = oldpc + 4;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 6 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -122444,6 +122467,7 @@ uae_u32 REGPARAM2 op_4eb0_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
+		pcoffset = oldpc + 4;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 10 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -122504,6 +122528,7 @@ uae_u32 REGPARAM2 op_4eb8_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
+		pcoffset = oldpc + 4;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 6 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -122569,6 +122594,7 @@ uae_u32 REGPARAM2 op_4eb9_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
+		pcoffset = oldpc + 6;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 8 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -122630,6 +122656,7 @@ uae_u32 REGPARAM2 op_4eba_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
+		pcoffset = oldpc + 4;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 6 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -122697,6 +122724,7 @@ uae_u32 REGPARAM2 op_4ebb_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
+		pcoffset = oldpc + 4;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 10 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -122747,6 +122775,7 @@ uae_u32 REGPARAM2 op_4ed0_12_ff(uae_u32 opcode)
 	uae_u32 srcreg = (real_opcode & 7);
 	uaecptr srca;
 	srca = m68k_areg(regs, srcreg);
+	uaecptr oldpc = m68k_getpci();
 	if (srca & 1) {
 		m68k_incpci(2);
 		exception3_read_prefetch_only(opcode, srca);
@@ -122756,7 +122785,8 @@ uae_u32 REGPARAM2 op_4ed0_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		exception2_fetch_opcode(opcode, 0, 0);
+		pcoffset = oldpc + 2;
+		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 4 * CYCLE_UNIT / 2 + count_cycles;
 	}
 	regs.ir = regs.irc;
@@ -122764,7 +122794,7 @@ uae_u32 REGPARAM2 op_4ed0_12_ff(uae_u32 opcode)
 	opcode = regs.ir;
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		exception2_fetch_opcode(0, 2, 0);
+		exception2_fetch_opcode(opcode, 2, 0);
 		return 8 * CYCLE_UNIT / 2 + count_cycles;
 	}
 	return 8 * CYCLE_UNIT / 2 + count_cycles;
@@ -122780,6 +122810,7 @@ uae_u32 REGPARAM2 op_4ee8_12_ff(uae_u32 opcode)
 	uae_u32 srcreg = (real_opcode & 7);
 	uaecptr srca;
 	srca = m68k_areg(regs, srcreg) + (uae_s32)(uae_s16)regs.irc;
+	uaecptr oldpc = m68k_getpci();
 	if (srca & 1) {
 		count_cycles += 2 * CYCLE_UNIT / 2;
 		m68k_incpci(2);
@@ -122790,7 +122821,8 @@ uae_u32 REGPARAM2 op_4ee8_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		exception2_fetch_opcode(opcode, 0, 0);
+		pcoffset = oldpc + 2;
+		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 6 * CYCLE_UNIT / 2 + count_cycles;
 	}
 	regs.ir = regs.irc;
@@ -122820,6 +122852,7 @@ uae_u32 REGPARAM2 op_4ef0_12_ff(uae_u32 opcode)
 		exception2_fetch_opcode(opcode, 2, 0);
 		return 4 * CYCLE_UNIT / 2 + count_cycles;
 	}
+	uaecptr oldpc = m68k_getpci();
 	if (srca & 1) {
 		count_cycles += 6 * CYCLE_UNIT / 2;
 		m68k_incpci(2);
@@ -122830,7 +122863,8 @@ uae_u32 REGPARAM2 op_4ef0_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		exception2_fetch_opcode(opcode, 0, 0);
+		pcoffset = oldpc + 2;
+		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 10 * CYCLE_UNIT / 2 + count_cycles;
 	}
 	regs.ir = regs.irc;
@@ -122853,6 +122887,7 @@ uae_u32 REGPARAM2 op_4ef8_12_ff(uae_u32 opcode)
 	int count_cycles = 0;
 	uaecptr srca;
 	srca = (uae_s32)(uae_s16)regs.irc;
+	uaecptr oldpc = m68k_getpci();
 	if (srca & 1) {
 		count_cycles += 2 * CYCLE_UNIT / 2;
 		m68k_incpci(2);
@@ -122863,7 +122898,8 @@ uae_u32 REGPARAM2 op_4ef8_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		exception2_fetch_opcode(opcode, 0, 0);
+		pcoffset = oldpc + 2;
+		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 6 * CYCLE_UNIT / 2 + count_cycles;
 	}
 	regs.ir = regs.irc;
@@ -122892,6 +122928,7 @@ uae_u32 REGPARAM2 op_4ef9_12_ff(uae_u32 opcode)
 		exception2_fetch(opcode, 4, -2);
 		return 4 * CYCLE_UNIT / 2 + count_cycles;
 	}
+	uaecptr oldpc = m68k_getpci();
 	if (srca & 1) {
 		m68k_incpci(2);
 		exception3_read_prefetch_only(opcode, srca);
@@ -122901,7 +122938,8 @@ uae_u32 REGPARAM2 op_4ef9_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		exception2_fetch_opcode(opcode, 0, 0);
+		pcoffset = oldpc + 2;
+		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 8 * CYCLE_UNIT / 2 + count_cycles;
 	}
 	regs.ir = regs.irc;
@@ -122925,6 +122963,7 @@ uae_u32 REGPARAM2 op_4efa_12_ff(uae_u32 opcode)
 	uaecptr srca;
 	srca = m68k_getpci() + 2;
 	srca += (uae_s32)(uae_s16)regs.irc;
+	uaecptr oldpc = m68k_getpci();
 	if (srca & 1) {
 		count_cycles += 2 * CYCLE_UNIT / 2;
 		m68k_incpci(2);
@@ -122935,7 +122974,8 @@ uae_u32 REGPARAM2 op_4efa_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		exception2_fetch_opcode(opcode, 0, 0);
+		pcoffset = oldpc + 2;
+		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 6 * CYCLE_UNIT / 2 + count_cycles;
 	}
 	regs.ir = regs.irc;
@@ -122964,6 +123004,7 @@ uae_u32 REGPARAM2 op_4efb_12_ff(uae_u32 opcode)
 		exception2_fetch_opcode(opcode, 2, 0);
 		return 4 * CYCLE_UNIT / 2 + count_cycles;
 	}
+	uaecptr oldpc = m68k_getpci();
 	if (srca & 1) {
 		count_cycles += 6 * CYCLE_UNIT / 2;
 		m68k_incpci(2);
@@ -122974,7 +123015,8 @@ uae_u32 REGPARAM2 op_4efb_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		exception2_fetch_opcode(opcode, 0, 0);
+		pcoffset = oldpc + 2;
+		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 10 * CYCLE_UNIT / 2 + count_cycles;
 	}
 	regs.ir = regs.irc;
@@ -131916,10 +131958,11 @@ uae_u32 REGPARAM2 op_6000_12_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -131929,7 +131972,6 @@ uae_u32 REGPARAM2 op_6000_12_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -131971,10 +132013,11 @@ uae_u32 REGPARAM2 op_6001_12_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -131984,7 +132027,6 @@ uae_u32 REGPARAM2 op_6001_12_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -132221,10 +132263,11 @@ uae_u32 REGPARAM2 op_6200_12_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -132234,7 +132277,6 @@ uae_u32 REGPARAM2 op_6200_12_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -132276,10 +132318,11 @@ uae_u32 REGPARAM2 op_6201_12_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -132289,7 +132332,6 @@ uae_u32 REGPARAM2 op_6201_12_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -132347,10 +132389,11 @@ uae_u32 REGPARAM2 op_6300_12_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -132360,7 +132403,6 @@ uae_u32 REGPARAM2 op_6300_12_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -132402,10 +132444,11 @@ uae_u32 REGPARAM2 op_6301_12_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -132415,7 +132458,6 @@ uae_u32 REGPARAM2 op_6301_12_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -132473,10 +132515,11 @@ uae_u32 REGPARAM2 op_6400_12_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -132486,7 +132529,6 @@ uae_u32 REGPARAM2 op_6400_12_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -132528,10 +132570,11 @@ uae_u32 REGPARAM2 op_6401_12_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -132541,7 +132584,6 @@ uae_u32 REGPARAM2 op_6401_12_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -132599,10 +132641,11 @@ uae_u32 REGPARAM2 op_6500_12_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -132612,7 +132655,6 @@ uae_u32 REGPARAM2 op_6500_12_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -132654,10 +132696,11 @@ uae_u32 REGPARAM2 op_6501_12_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -132667,7 +132710,6 @@ uae_u32 REGPARAM2 op_6501_12_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -132725,10 +132767,11 @@ uae_u32 REGPARAM2 op_6600_12_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -132738,7 +132781,6 @@ uae_u32 REGPARAM2 op_6600_12_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -132780,10 +132822,11 @@ uae_u32 REGPARAM2 op_6601_12_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -132793,7 +132836,6 @@ uae_u32 REGPARAM2 op_6601_12_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -132851,10 +132893,11 @@ uae_u32 REGPARAM2 op_6700_12_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -132864,7 +132907,6 @@ uae_u32 REGPARAM2 op_6700_12_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -132906,10 +132948,11 @@ uae_u32 REGPARAM2 op_6701_12_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -132919,7 +132962,6 @@ uae_u32 REGPARAM2 op_6701_12_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -132977,10 +133019,11 @@ uae_u32 REGPARAM2 op_6800_12_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -132990,7 +133033,6 @@ uae_u32 REGPARAM2 op_6800_12_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -133032,10 +133074,11 @@ uae_u32 REGPARAM2 op_6801_12_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -133045,7 +133088,6 @@ uae_u32 REGPARAM2 op_6801_12_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -133103,10 +133145,11 @@ uae_u32 REGPARAM2 op_6900_12_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -133116,7 +133159,6 @@ uae_u32 REGPARAM2 op_6900_12_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -133158,10 +133200,11 @@ uae_u32 REGPARAM2 op_6901_12_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -133171,7 +133214,6 @@ uae_u32 REGPARAM2 op_6901_12_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -133229,10 +133271,11 @@ uae_u32 REGPARAM2 op_6a00_12_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -133242,7 +133285,6 @@ uae_u32 REGPARAM2 op_6a00_12_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -133284,10 +133326,11 @@ uae_u32 REGPARAM2 op_6a01_12_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -133297,7 +133340,6 @@ uae_u32 REGPARAM2 op_6a01_12_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -133355,10 +133397,11 @@ uae_u32 REGPARAM2 op_6b00_12_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -133368,7 +133411,6 @@ uae_u32 REGPARAM2 op_6b00_12_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -133410,10 +133452,11 @@ uae_u32 REGPARAM2 op_6b01_12_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -133423,7 +133466,6 @@ uae_u32 REGPARAM2 op_6b01_12_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -133481,10 +133523,11 @@ uae_u32 REGPARAM2 op_6c00_12_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -133494,7 +133537,6 @@ uae_u32 REGPARAM2 op_6c00_12_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -133536,10 +133578,11 @@ uae_u32 REGPARAM2 op_6c01_12_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -133549,7 +133592,6 @@ uae_u32 REGPARAM2 op_6c01_12_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -133607,10 +133649,11 @@ uae_u32 REGPARAM2 op_6d00_12_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -133620,7 +133663,6 @@ uae_u32 REGPARAM2 op_6d00_12_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -133662,10 +133704,11 @@ uae_u32 REGPARAM2 op_6d01_12_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -133675,7 +133718,6 @@ uae_u32 REGPARAM2 op_6d01_12_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -133733,10 +133775,11 @@ uae_u32 REGPARAM2 op_6e00_12_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -133746,7 +133789,6 @@ uae_u32 REGPARAM2 op_6e00_12_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -133788,10 +133830,11 @@ uae_u32 REGPARAM2 op_6e01_12_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -133801,7 +133844,6 @@ uae_u32 REGPARAM2 op_6e01_12_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -133859,10 +133901,11 @@ uae_u32 REGPARAM2 op_6f00_12_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -133872,7 +133915,6 @@ uae_u32 REGPARAM2 op_6f00_12_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -133914,10 +133956,11 @@ uae_u32 REGPARAM2 op_6f01_12_ff(uae_u32 opcode)
 			return 2 * CYCLE_UNIT / 2 + count_cycles;
 		}
 		m68k_incpci((uae_s32)src + 2);
+		int pcadjust = oldpc - m68k_getpci() + 2;
 		get_word_000_prefetch(0);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
+			pcoffset += pcadjust;
 			exception2_fetch_opcode(opcode, 0, pcoffset);
 			return 6 * CYCLE_UNIT / 2 + count_cycles;
 		}
@@ -133927,7 +133970,6 @@ uae_u32 REGPARAM2 op_6f01_12_ff(uae_u32 opcode)
 		get_word_000_prefetch(2);
 		if(hardware_bus_error) {
 			int pcoffset = 0;
-			pcoffset = oldpc - m68k_getpci() + 2;
 			exception2_fetch_opcode(opcode, 2, pcoffset);
 			return 10 * CYCLE_UNIT / 2 + count_cycles;
 		}
