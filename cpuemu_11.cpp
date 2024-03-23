@@ -42743,7 +42743,7 @@ uae_u32 REGPARAM2 op_4e90_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc + 2;
+		pcoffset = (oldpc - srca) + 2;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 4 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -42805,7 +42805,7 @@ uae_u32 REGPARAM2 op_4ea8_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc + 4;
+		pcoffset = (oldpc - srca) + 4;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 6 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -42873,7 +42873,7 @@ uae_u32 REGPARAM2 op_4eb0_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc + 4;
+		pcoffset = (oldpc - srca) + 4;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 10 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -42933,7 +42933,7 @@ uae_u32 REGPARAM2 op_4eb8_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc + 4;
+		pcoffset = (oldpc - srca) + 4;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 6 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -42998,7 +42998,7 @@ uae_u32 REGPARAM2 op_4eb9_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc + 6;
+		pcoffset = (oldpc - srca) + 6;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 8 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -43059,7 +43059,7 @@ uae_u32 REGPARAM2 op_4eba_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc + 4;
+		pcoffset = (oldpc - srca) + 4;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 6 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -43126,7 +43126,7 @@ uae_u32 REGPARAM2 op_4ebb_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc + 4;
+		pcoffset = (oldpc - srca) + 4;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 10 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -43186,7 +43186,7 @@ uae_u32 REGPARAM2 op_4ed0_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc + 2;
+		pcoffset = (oldpc - srca) + 2;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 4 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -43222,7 +43222,7 @@ uae_u32 REGPARAM2 op_4ee8_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc + 2;
+		pcoffset = (oldpc - srca) + 2;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 6 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -43263,7 +43263,7 @@ uae_u32 REGPARAM2 op_4ef0_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc + 2;
+		pcoffset = (oldpc - srca) + 2;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 10 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -43297,7 +43297,7 @@ uae_u32 REGPARAM2 op_4ef8_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc + 2;
+		pcoffset = (oldpc - srca) + 2;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 6 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -43336,7 +43336,7 @@ uae_u32 REGPARAM2 op_4ef9_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc + 2;
+		pcoffset = (oldpc - srca) + 2;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 8 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -43371,7 +43371,7 @@ uae_u32 REGPARAM2 op_4efa_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc + 2;
+		pcoffset = (oldpc - srca) + 2;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 6 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -43411,7 +43411,7 @@ uae_u32 REGPARAM2 op_4efb_11_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc + 2;
+		pcoffset = (oldpc - srca) + 2;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 10 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -122336,7 +122336,7 @@ uae_u32 REGPARAM2 op_4e90_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc + 2;
+		pcoffset = (oldpc - srca) + 2;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 4 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -122398,7 +122398,7 @@ uae_u32 REGPARAM2 op_4ea8_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc + 4;
+		pcoffset = (oldpc - srca) + 4;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 6 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -122467,7 +122467,7 @@ uae_u32 REGPARAM2 op_4eb0_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc + 4;
+		pcoffset = (oldpc - srca) + 4;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 10 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -122528,7 +122528,7 @@ uae_u32 REGPARAM2 op_4eb8_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc + 4;
+		pcoffset = (oldpc - srca) + 4;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 6 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -122594,7 +122594,7 @@ uae_u32 REGPARAM2 op_4eb9_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc + 6;
+		pcoffset = (oldpc - srca) + 6;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 8 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -122656,7 +122656,7 @@ uae_u32 REGPARAM2 op_4eba_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc + 4;
+		pcoffset = (oldpc - srca) + 4;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 6 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -122724,7 +122724,7 @@ uae_u32 REGPARAM2 op_4ebb_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc + 4;
+		pcoffset = (oldpc - srca) + 4;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 10 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -122785,7 +122785,7 @@ uae_u32 REGPARAM2 op_4ed0_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc + 2;
+		pcoffset = (oldpc - srca) + 2;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 4 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -122821,7 +122821,7 @@ uae_u32 REGPARAM2 op_4ee8_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc + 2;
+		pcoffset = (oldpc - srca) + 2;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 6 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -122863,7 +122863,7 @@ uae_u32 REGPARAM2 op_4ef0_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc + 2;
+		pcoffset = (oldpc - srca) + 2;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 10 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -122898,7 +122898,7 @@ uae_u32 REGPARAM2 op_4ef8_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc + 2;
+		pcoffset = (oldpc - srca) + 2;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 6 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -122938,7 +122938,7 @@ uae_u32 REGPARAM2 op_4ef9_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc + 2;
+		pcoffset = (oldpc - srca) + 2;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 8 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -122974,7 +122974,7 @@ uae_u32 REGPARAM2 op_4efa_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc + 2;
+		pcoffset = (oldpc - srca) + 2;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 6 * CYCLE_UNIT / 2 + count_cycles;
 	}
@@ -123015,7 +123015,7 @@ uae_u32 REGPARAM2 op_4efb_12_ff(uae_u32 opcode)
 	get_word_000_prefetch(0);
 	if(hardware_bus_error) {
 		int pcoffset = 0;
-		pcoffset = oldpc + 2;
+		pcoffset = (oldpc - srca) + 2;
 		exception2_fetch_opcode(opcode, 0, pcoffset);
 		return 10 * CYCLE_UNIT / 2 + count_cycles;
 	}
