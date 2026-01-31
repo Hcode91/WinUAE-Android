@@ -848,13 +848,15 @@ void set_custom_limits (int w, int h, int dx, int dy, bool blank)
 		visible_bottom_stop = startypos + dy + h;
 		if (currprefs.gfx_overscanmode >= OVERSCANMODE_BROADCAST) {
 			visible_top_start -= 1 << currprefs.gfx_resolution;
-			visible_bottom_stop += 1 << currprefs.gfx_resolution;
 		}
 		if (visible_top_start < hhadd + startypos) {
 			visible_top_start = hhadd + startypos;
 		}
 		if ((current_linear_vpos << currprefs.gfx_vresolution) - hhadd2 < visible_bottom_stop) {
 			visible_bottom_stop = (current_linear_vpos << currprefs.gfx_vresolution) - hhadd2;
+		}
+		if (currprefs.gfx_overscanmode >= OVERSCANMODE_BROADCAST) {
+			visible_bottom_stop += 1 << currprefs.gfx_resolution;
 		}
 	}
 
