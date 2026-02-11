@@ -5674,9 +5674,11 @@ static void get_line(int monid, int gfx_ypos, enum nln_how how, int lol_shift_pr
 		}
 	}
 	
-	if ((denise_pixtotal_max << (1 + hresolution)) > vb->inwidth) {
-		denise_pixtotal_max = vb->inwidth >> (1 + hresolution);
+	int maxw = (uae_u32*)xlinebuffer_end - buf1;
+	if ((denise_pixtotal_max << (1 + hresolution)) > maxw) {
+		denise_pixtotal_max = maxw >> (1 + hresolution);
 	}
+
 	if (xshift > 0) {
 		denise_pixtotal_max -= xshift;
 	}
