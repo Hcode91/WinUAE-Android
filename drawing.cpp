@@ -5555,8 +5555,8 @@ static void lts_null(void)
 			denise_hcounter &= 511;
 			denise_hcounter_next++;
 			denise_hcounter_next &= 511;
-		}
 		denise_pixtotal++;
+		}
 		if (denise_pixtotal == 0) {
 			internal_pixel_start_cnt = internal_pixel_cnt;
 		}
@@ -5580,7 +5580,7 @@ static void get_line(int monid, int gfx_ypos, enum nln_how how, int lol_shift_pr
 	xlinebuffer2 = NULL;
 	xlinebuffer_genlock = NULL;
 
-	denise_pixtotal_max = denise_pixtotalv - denise_pixtotalskip2;
+	denise_pixtotal_max = (denise_pixtotalv - denise_pixtotalskip2) * 2;
 	denise_pixtotal = -denise_pixtotalskip;
 
 	if (!vb->locked) {
@@ -5674,13 +5674,17 @@ static void get_line(int monid, int gfx_ypos, enum nln_how how, int lol_shift_pr
 		}
 	}
 	
+	denise_pixtotal *= 2;
+
+	if (buf1) {
 	int maxw = (uae_u32*)xlinebuffer_end - buf1;
-	if ((denise_pixtotal_max << (1 + hresolution)) > maxw) {
-		denise_pixtotal_max = maxw >> (1 + hresolution);
+		if ((denise_pixtotal_max << hresolution) > maxw) {
+			denise_pixtotal_max = maxw >> hresolution;
+		}
 	}
 
 	if (xshift > 0) {
-		denise_pixtotal_max -= xshift;
+		denise_pixtotal_max -= xshift * 2;
 	}
 	if (!buf1) {
 		denise_pixtotal_max = -0x7fffffff;
@@ -5955,6 +5959,7 @@ static void draw_denise_line(int gfx_ypos, enum nln_how how, uae_u32 linecnt, in
 						denise_hcounter &= 511;
 						denise_hcounter_next++;
 						denise_hcounter_next &= 511;
+						denise_pixtotal++;
 					}
 				} else {
 					for (int h = 0; h < 2 ;h++) {
@@ -5973,9 +5978,9 @@ static void draw_denise_line(int gfx_ypos, enum nln_how how, uae_u32 linecnt, in
 						denise_hcounter &= 511;
 						denise_hcounter_next++;
 						denise_hcounter_next &= 511;
+						denise_pixtotal++;
 					}
 				}
-				denise_pixtotal++;
 				denise_hcounter = denise_hcounter_new;
 				if (denise_accurate_mode) {
 					denise_hcounter_cmp = denise_hcounter;
@@ -6543,6 +6548,7 @@ static void lts_unaligned_aga(int cnt, int cnt_next, int h)
 	*debug_dma_dhpos_odd = denise_hcounter;
 #endif
 
+	denise_pixtotal++;
 	denise_hcounter_cmp++;
 	denise_hcounter_cmp &= 511;
 	denise_hcounter++;
@@ -6759,6 +6765,7 @@ static void lts_unaligned_ecs(int cnt, int cnt_next, int h)
 	*debug_dma_dhpos_odd = denise_hcounter;
 #endif
 
+	denise_pixtotal++;
 	denise_hcounter_cmp++;
 	denise_hcounter++;
 	denise_hcounter &= 511;
