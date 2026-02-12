@@ -11239,6 +11239,12 @@ static int can_fast_custom(void)
 		return 0;
 #endif
 	}
+	if (vpos == plflastline || vpos == plffirstline) {
+		return 0;
+	}
+	if (agnus_bsvb && !harddis_v) {
+		return 0;
+	}
 	if (!display_hstart_fastmode) {
 		return 0;
 	}
