@@ -3206,7 +3206,11 @@ static void expand_bplcon1(uae_u16 v)
 
 int gethresolution(void)
 {
-	return hresolution;
+	int h = currprefs.gfx_resolution;
+	if (autoswitch_old_resolution == RES_HIRES && currprefs.gfx_resolution == RES_SUPERHIRES) {
+		h--;
+	}
+	return h;
 }
 
 static void sethresolution(void)
