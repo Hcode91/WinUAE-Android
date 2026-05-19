@@ -1,3 +1,6 @@
+#if defined(CPU_AARCH64)
+#include "arm/comptbl_arm.h"
+#else
 extern const struct comptbl op_smalltbl_0_comp_nf[];
 extern const struct comptbl op_smalltbl_0_comp_ff[];
 extern compop_func op_0_0_comp_ff;
@@ -2801,3 +2804,4 @@ extern compop_func op_f608_0_comp_nf;
 extern compop_func op_f610_0_comp_nf;
 extern compop_func op_f618_0_comp_nf;
 extern compop_func op_f620_0_comp_nf;
+#endif /* CPU_AARCH64 */
