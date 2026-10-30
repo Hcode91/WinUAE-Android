@@ -19,8 +19,11 @@ jobs:
       - name: Check out WinUAE-Android
         uses: actions/checkout@v4
 
-      - name: Install Android SDK and NDK
+      - name: Install Android SDK command-line tools
         uses: android-actions/setup-android@v3
+        with:
+          packages: |
+            platform-tools
 
       - name: Install CMake and NDK
         run: |
@@ -63,5 +66,5 @@ jobs:
           if [ "${{ steps.configure.outcome }}" = "success" ]; then
             echo "CMake configure completed. This does not yet mean the emulator can compile or run on Android."
           else
-            echo "CMake configure failed as expected during early port reconnaissance. Inspect the configure log above to identify the first Android-specific blocker."
+            echo "CMake configure did not complete. Inspect the configure log above to identify the first Android-specific blocker."
           fi
