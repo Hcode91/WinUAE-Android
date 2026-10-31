@@ -21,6 +21,12 @@
 #ifndef EMU_CPU_H
 #define EMU_CPU_H
 
+/* Android's asm-generic termbits.h defines CR0 as a terminal control code,
+   which collides with this 86Box CPU-state field name. */
+#if defined(__ANDROID__) && defined(CR0)
+#undef CR0
+#endif
+
 enum {
     FPU_NONE,
     FPU_8087,
