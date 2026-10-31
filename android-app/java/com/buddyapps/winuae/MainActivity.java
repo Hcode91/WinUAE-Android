@@ -106,15 +106,19 @@ public final class MainActivity extends Activity implements SurfaceHolder.Callba
         Button b = button(title, v -> { });
         b.setOnTouchListener((v, e) -> {
             if (e.getAction() == MotionEvent.ACTION_DOWN) {
-                if (code >= 0) nativeKey(code, true);
-                else { nativeMouse(0, 0, true); nativeKey(228, true); }
-                nativeJoystick(control, true);
+                if (coreLoaded && started) {
+                    if (code >= 0) nativeKey(code, true);
+                    else { nativeMouse(0, 0, true); nativeKey(228, true); }
+                    nativeJoystick(control, true);
+                }
                 return true;
             }
             if (e.getAction() == MotionEvent.ACTION_UP || e.getAction() == MotionEvent.ACTION_CANCEL) {
-                if (code >= 0) nativeKey(code, false);
-                else { nativeMouse(0, 0, false); nativeKey(228, false); }
-                nativeJoystick(control, false);
+                if (coreLoaded && started) {
+                    if (code >= 0) nativeKey(code, false);
+                    else { nativeMouse(0, 0, false); nativeKey(228, false); }
+                    nativeJoystick(control, false);
+                }
                 return true;
             }
             return true;
@@ -158,6 +162,7 @@ public final class MainActivity extends Activity implements SurfaceHolder.Callba
         if (started) { nativeStop(); started = false; updateStatus(); }
     }
     private boolean touchScreen(View view, MotionEvent event) {
+        if (!coreLoaded || !started) return true;
         float x = event.getX(), y = event.getY();
         if (event.getAction() == MotionEvent.ACTION_DOWN) { lastX = x; lastY = y; havePointer = true; nativeMouse(0, 0, true); return true; }
         if (event.getAction() == MotionEvent.ACTION_MOVE && havePointer) {
