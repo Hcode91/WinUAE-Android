@@ -66,14 +66,27 @@ with zipfile.ZipFile(src) as zin, zipfile.ZipFile(dst, "w") as zout:
 EOF
 
 echo "5/5 Sign"
-if [ ! -f "$KEYDIR/apps.jks" ]; then
-  mkdir -p "$KEYDIR"; chmod 700 "$KEYDIR"
-  head -c 24 /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c 24 > "$KEYDIR/password"
-  chmod 600 "$KEYDIR/password"
-  keytool -genkeypair -keystore "$KEYDIR/apps.jks" -alias apps -keyalg RSA -keysize 2048 -validity 10000 \
-    -storepass "$(cat "$KEYDIR/password")" -keypass "$(cat "$KEYDIR/password")" -dname "CN=Buddy apps" >/dev/null 2>&1
+if [ -n "${ANDROID_KEYSTORE_PATH:-}" ]; then
+  KEYSTORE=$ANDROID_KEYSTORE_PATH
+  KEY_ALIAS=${ANDROID_KEY_ALIAS:-}
+  KEYSTORE_PASSWORD=${ANDROID_KEYSTORE_PASSWORD:-}
+  KEY_PASSWORD=${ANDROID_KEY_PASSWORD:-$KEYSTORE_PASSWORD}
+  [ -f "$KEYSTORE" ] || { echo "Configured Android keystore not found: $KEYSTORE" >&2; exit 1; }
+  [ -n "$KEY_ALIAS" ] || { echo "ANDROID_KEY_ALIAS is required with ANDROID_KEYSTORE_PATH" >&2; exit 1; }
+  [ -n "$KEYSTORE_PASSWORD" ] || { echo "ANDROID_KEYSTORE_PASSWORD is required with ANDROID_KEYSTORE_PATH" >&2; exit 1; }
+  apksigner sign --ks "$KEYSTORE" --ks-key-alias "$KEY_ALIAS" \
+    --ks-pass "pass:$KEYSTORE_PASSWORD" --key-pass "pass:$KEY_PASSWORD" \
+    --out "$OUT/app.apk" "$OUT/aligned.apk"
+else
+  if [ ! -f "$KEYDIR/apps.jks" ]; then
+    mkdir -p "$KEYDIR"; chmod 700 "$KEYDIR"
+    head -c 24 /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c 24 > "$KEYDIR/password"
+    chmod 600 "$KEYDIR/password"
+    keytool -genkeypair -keystore "$KEYDIR/apps.jks" -alias apps -keyalg RSA -keysize 2048 -validity 10000 \
+      -storepass "$(cat "$KEYDIR/password")" -keypass "$(cat "$KEYDIR/password")" -dname "CN=Buddy apps" >/dev/null 2>&1
+  fi
+  apksigner sign --ks "$KEYDIR/apps.jks" --ks-key-alias apps --ks-pass "file:$KEYDIR/password" \
+    --out "$OUT/app.apk" "$OUT/aligned.apk"
 fi
-apksigner sign --ks "$KEYDIR/apps.jks" --ks-key-alias apps --ks-pass "file:$KEYDIR/password" \
-  --out "$OUT/app.apk" "$OUT/aligned.apk"
 apksigner verify "$OUT/app.apk"
 echo "Built $OUT/app.apk"
