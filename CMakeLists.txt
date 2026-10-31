@@ -19,6 +19,8 @@ project(winuae_unix_port LANGUAGES C CXX)
 
 include(GNUInstallDirs)
 include(CTest)
+set(THREADS_PREFER_PTHREAD_FLAG TRUE)
+find_package(Threads REQUIRED)
 
 set(WINUAE_UNIX_TEST_TARGETS)
 function(winuae_unix_register_test target)
@@ -2253,7 +2255,7 @@ if(WINUAE_UNIX_BUILD_EXECUTABLE)
     if(WINUAE_UNIX_EXTRA_LIBRARY_DIRS)
         target_link_directories(winuae_unix PRIVATE ${WINUAE_UNIX_EXTRA_LIBRARY_DIRS})
     endif()
-    target_link_libraries(winuae_unix PRIVATE pthread ${CMAKE_DL_LIBS} ZLIB::ZLIB ${WINUAE_UNIX_EXTRA_LIBRARIES})
+    target_link_libraries(winuae_unix PRIVATE Threads::Threads ${CMAKE_DL_LIBS} ZLIB::ZLIB ${WINUAE_UNIX_EXTRA_LIBRARIES})
 
     function(add_winuae_unix_smoke_target target script)
         add_custom_target(${target}
@@ -2339,7 +2341,7 @@ target_include_directories(winuae_unix_threading_test PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}"
     "${CMAKE_CURRENT_SOURCE_DIR}/include"
 )
-target_link_libraries(winuae_unix_threading_test PRIVATE pthread)
+target_link_libraries(winuae_unix_threading_test PRIVATE Threads::Threads)
 winuae_unix_register_test(winuae_unix_threading_test)
 
 add_executable(winuae_unix_serial_tx_test EXCLUDE_FROM_ALL
