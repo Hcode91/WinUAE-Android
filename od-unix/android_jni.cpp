@@ -1,0 +1,72 @@
+#include <jni.h>
+#include "sysconfig.h"
+#include "sysdeps.h"
+#include "target_main.h"
+#include "input.h"
+#include "uae.h"
+#include <atomic>
+#include <string>
+#include <thread>
+#include <vector>
+#include <cstdlib>
+
+extern "C" void winuae_android_set_surface(JNIEnv *, jobject);
+extern "C" void winuae_android_request_quit(void);
+extern "C" void winuae_android_reset(void);
+extern void unix_input_mouse_motion(int dx, int dy);
+extern void unix_input_mouse_button(int button, bool pressed);
+extern void unix_input_keyboard_key(int scancode, bool pressed, int lockstate);
+
+static std::thread emulator_thread;
+static std::atomic<bool> running{false};
+static std::string java_string(JNIEnv *env, jstring value)
+{
+    if (!value) return {};
+    const char *text = env->GetStringUTFChars(value, nullptr);
+    std::string result = text ? text : "";
+    if (text) env->ReleaseStringUTFChars(value, text);
+    return result;
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_buddyapps_winuae_MainActivity_nativeSurface(JNIEnv *env, jclass, jobject surface)
+{ winuae_android_set_surface(env, surface); }
+
+extern "C" JNIEXPORT jboolean JNICALL
+Java_com_buddyapps_winuae_MainActivity_nativeStart(JNIEnv *env, jclass, jstring home, jstring rom, jstring disk)
+{
+    if (running.exchange(true)) return JNI_FALSE;
+    const std::string home_path = java_string(env, home);
+    const std::string rom_path = java_string(env, rom);
+    const std::string disk_path = java_string(env, disk);
+    if (rom_path.empty()) { running.store(false); return JNI_FALSE; }
+    winuae_android_reset();
+    // The video backend observes this flag between emulation frames.
+    // A previous nativeStop has already joined the prior emulation thread.
+    setenv("HOME", home_path.c_str(), 1);
+    emulator_thread = std::thread([home_path, rom_path, disk_path]() {
+        std::vector<std::string> args{"winuae", "-s", "use_gui=no", "-s", "kickstart_rom_file=" + rom_path};
+        if (!disk_path.empty()) { args.emplace_back("-s"); args.emplace_back("floppy0=" + disk_path); }
+        std::vector<char *> argv;
+        for (auto &arg : args) argv.push_back(arg.data());
+        argv.push_back(nullptr);
+        target_main_set_args((int)args.size(), argv.data());
+        real_main((int)args.size(), argv.data());
+        target_main_exit();
+        running.store(false);
+    });
+    return JNI_TRUE;
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_buddyapps_winuae_MainActivity_nativeStop(JNIEnv *, jclass)
+{
+    if (running.load()) winuae_android_request_quit();
+    if (emulator_thread.joinable()) emulator_thread.join();
+}
+extern "C" JNIEXPORT void JNICALL
+Java_com_buddyapps_winuae_MainActivity_nativeMouse(JNIEnv *, jclass, jint dx, jint dy, jboolean down)
+{ unix_input_mouse_motion(dx, dy); unix_input_mouse_button(0, down == JNI_TRUE); }
+extern "C" JNIEXPORT void JNICALL
+Java_com_buddyapps_winuae_MainActivity_nativeKey(JNIEnv *, jclass, jint code, jboolean down)
+{ unix_input_keyboard_key(code, down == JNI_TRUE, 0); }

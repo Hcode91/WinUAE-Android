@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - "CMakeLists.txt"
+      - "android-app/**"
       - "86box/**"
       - "archivers/lha/**"
       - "blkdev_cdimage.cpp"
@@ -83,6 +84,14 @@ jobs:
         if: steps.configure.outcome == 'success'
         run: cmake --build build-android-probe --parallel 2
 
+      - name: Upload Android ARM64 native library
+        if: steps.compile.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: winuae-android-arm64
+          path: build-android-probe/libwinuae.so
+          if-no-files-found: error
+
       - name: Summarize actual results
         if: always()
         run: |
@@ -92,7 +101,7 @@ jobs:
             grep -E '^(CMAKE_SYSTEM_NAME|CMAKE_ANDROID_ARCH_ABI|ANDROID_PLATFORM|WINUAE_UNIX_WITH_[^:]+|WINUAE_UNIX_BUILD_[^:]+):' build-android-probe/CMakeCache.txt || true
           fi
           if [ "${{ steps.configure.outcome }}" = "success" ] && [ "${{ steps.compile.outcome }}" = "success" ]; then
-            echo "Android ARM64 native build succeeded. This is not yet an installable Android APK."
+            echo "Android ARM64 native library build succeeded."
           elif [ "${{ steps.configure.outcome }}" = "success" ]; then
             echo "Android configuration succeeded, but native compilation exposed the next blocker."
           else
