@@ -63,6 +63,5 @@ void unix_video_get_desktop(int *dw,int *dh,int *x,int *y,int *w,int *h)
 void unix_video_set_mouse_grab(bool) {}
 bool unix_video_get_mouse_grab(void) { return false; }
 void unix_video_toggle_mouse_grab(void) {}
-const TCHAR *unix_gfx_shader_option(void) { return nullptr; }
 int target_get_display(const TCHAR *) { return -1; }
 const TCHAR *target_get_display_name(int, bool) { return nullptr; }

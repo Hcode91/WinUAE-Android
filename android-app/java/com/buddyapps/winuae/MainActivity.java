@@ -64,6 +64,11 @@ public final class MainActivity extends Activity implements SurfaceHolder.Callba
         root.addView(keys, new LinearLayout.LayoutParams(-1, -2));
         setContentView(root);
         coreLoaded = loadCore();
+        File savedRom = new File(getFilesDir(), "kick.rom");
+        File savedDisk = new File(getFilesDir(), "disk.adf");
+        if (savedRom.isFile()) romPath = savedRom.getAbsolutePath();
+        if (savedDisk.isFile()) diskPath = savedDisk.getAbsolutePath();
+        if (coreLoaded && screen.getHolder().getSurface().isValid()) nativeSurface(screen.getHolder().getSurface());
         if (romPath.isEmpty()) updateStatus();
     }
 
@@ -125,7 +130,7 @@ public final class MainActivity extends Activity implements SurfaceHolder.Callba
         } catch (Exception e) { Toast.makeText(this, "Could not copy selected file", Toast.LENGTH_LONG).show(); }
     }
     private void updateStatus() {
-        status.setText("ROM: " + (romPath.isEmpty() ? "not selected" : "ready") + "   Disk: " + (diskPath.isEmpty() ? "none" : "ready"));
+        status.setText((coreLoaded ? "ROM: " + (romPath.isEmpty() ? "not selected" : "ready") + "   Disk: " + (diskPath.isEmpty() ? "none" : "ready") : "WinUAE ARM64 core missing"));
     }
     private void startEmulator() {
         if (started) return;
@@ -152,8 +157,8 @@ public final class MainActivity extends Activity implements SurfaceHolder.Callba
         }
         return true;
     }
-    @Override public void surfaceCreated(SurfaceHolder holder) { nativeSurface(holder.getSurface()); }
-    @Override public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) { nativeSurface(holder.getSurface()); }
-    @Override public void surfaceDestroyed(SurfaceHolder holder) { nativeSurface(null); }
-    @Override protected void onDestroy() { stopEmulator(); nativeSurface(null); super.onDestroy(); }
+    @Override public void surfaceCreated(SurfaceHolder holder) { if (coreLoaded) nativeSurface(holder.getSurface()); }
+    @Override public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) { if (coreLoaded) nativeSurface(holder.getSurface()); }
+    @Override public void surfaceDestroyed(SurfaceHolder holder) { if (coreLoaded) nativeSurface(null); }
+    @Override protected void onDestroy() { stopEmulator(); if (coreLoaded) nativeSurface(null); super.onDestroy(); }
 }
