@@ -37,7 +37,6 @@ jobs:
 
       - name: Configure WinUAE for Android ARM64
         id: configure
-        continue-on-error: true
         run: |
           cmake -S . -B build-android-probe \
             -DCMAKE_TOOLCHAIN_FILE="$ANDROID_HOME/ndk/27.2.12479018/build/cmake/android.toolchain.cmake" \
@@ -47,6 +46,7 @@ jobs:
             -DWINUAE_UNIX_BUILD_EXECUTABLE=ON \
             -DWINUAE_UNIX_WITH_QT_UI=OFF \
             -DWINUAE_UNIX_WITH_INTEGRATED_QT_UI=OFF \
+            -DWINUAE_UNIX_WITH_PRINTER_EMULATION=OFF \
             -DWINUAE_UNIX_WITH_NATIVE_CD=OFF \
             -DWINUAE_UNIX_WITH_NATIVE_SCSI=OFF \
             -DWINUAE_UNIX_WITH_NATIVE_HARDDRIVES=OFF \
@@ -60,7 +60,6 @@ jobs:
       - name: Compile native Android ARM64 targets
         id: compile
         if: steps.configure.outcome == 'success'
-        continue-on-error: true
         run: cmake --build build-android-probe --parallel 2
 
       - name: Summarize actual results
