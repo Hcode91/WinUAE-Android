@@ -90,3 +90,10 @@ Java_com_buddyapps_winuae_MainActivity_nativeJoystick(JNIEnv *, jclass, jint con
     send_input_event(port0[control], pressed, 1, 0);
     send_input_event(port1[control], pressed, 1, 0);
 }
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_buddyapps_winuae_MainActivity_nativeWarp(JNIEnv *, jclass, jboolean down)
+{
+    if (!running.load()) return;
+    send_input_event(INPUTEVENT_SPC_WARP, down == JNI_TRUE ? 1 : 0, 1, 0);
+}
