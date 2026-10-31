@@ -32,10 +32,7 @@ public final class MainActivity extends Activity implements SurfaceHolder.Callba
     private float lastX, lastY;
     private boolean havePointer;
 
-    static {
-        try { System.loadLibrary("winuae"); }
-        catch (UnsatisfiedLinkError missing) { /* Show a useful message; the packaged native core is required. */ }
-    }
+    private boolean coreLoaded;
 
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
@@ -66,7 +63,27 @@ public final class MainActivity extends Activity implements SurfaceHolder.Callba
         keys.addView(keyButton("Fire", -1));
         root.addView(keys, new LinearLayout.LayoutParams(-1, -2));
         setContentView(root);
+        coreLoaded = loadCore();
         if (romPath.isEmpty()) updateStatus();
+    }
+
+    private boolean loadCore() {
+        try {
+            File dir = getDir("native", MODE_PRIVATE);
+            File lib = new File(dir, "libwinuae.so");
+            try (InputStream in = getAssets().open("libwinuae.so");
+                 FileOutputStream out = new FileOutputStream(lib)) {
+                byte[] buffer = new byte[32768]; int n;
+                while ((n = in.read(buffer)) >= 0) out.write(buffer, 0, n);
+            }
+            lib.setReadable(true, false);
+            lib.setWritable(false, false);
+            System.load(lib.getAbsolutePath());
+            return true;
+        } catch (Exception | UnsatisfiedLinkError e) {
+            status.setText("Android native core is missing; build the ARM64 APK first");
+            return false;
+        }
     }
 
     private Button button(String title, View.OnClickListener action) {
@@ -112,6 +129,7 @@ public final class MainActivity extends Activity implements SurfaceHolder.Callba
     }
     private void startEmulator() {
         if (started) return;
+        if (!coreLoaded) { Toast.makeText(this, "WinUAE core is not included in this APK", Toast.LENGTH_LONG).show(); return; }
         if (romPath.isEmpty()) { pick(PICK_ROM); return; }
         if (!nativeStart(getFilesDir().getAbsolutePath(), romPath, diskPath)) {
             Toast.makeText(this, "Native WinUAE core is unavailable", Toast.LENGTH_LONG).show(); return;
