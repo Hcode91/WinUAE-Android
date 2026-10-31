@@ -6,6 +6,7 @@ on:
     paths:
       - "CMakeLists.txt"
       - "android-app/**"
+      - "tools/build-android-apk.sh"
       - "86box/**"
       - "archivers/lha/**"
       - "blkdev_cdimage.cpp"
