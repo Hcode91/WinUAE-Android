@@ -2,6 +2,8 @@
 #include "sysconfig.h"
 #include "sysdeps.h"
 #include "target_main.h"
+#include "options.h"
+#include "traps.h"
 #include "input.h"
 #include "inputdevice.h"
 #include "uae.h"
