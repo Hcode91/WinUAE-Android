@@ -40,7 +40,6 @@ typedef unsigned long ioctlsockopt_t;
 
 #include <winsock2.h>
 #include <Ws2tcpip.h>
-#include <sys/timeb.h>
 #include <iphlpapi.h>
 
 # define USE_FIONBIO 1

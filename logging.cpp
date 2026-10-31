@@ -9,7 +9,6 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <time.h>
-#include <sys/timeb.h>
 
 void UAECALL uae_log(const char *format, ...)
 {
