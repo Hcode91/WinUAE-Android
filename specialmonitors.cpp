@@ -2331,6 +2331,7 @@ static uae_u8 get_noise(void)
 	return noise_buffer[noise_index];
 }
 
+#ifdef WINUAE_UNIX_WITH_LIBPNG
 #include "png.h"
 
 struct png_cb
@@ -2440,6 +2441,12 @@ end:
 
 	return ok;
 }
+#else
+static bool load_genlock_image(void)
+{
+	return false;
+}
+#endif
 
 static bool do_genlock(struct vidbuffer *src, struct vidbuffer *dst, bool doublelines, int oddlines, bool zclken)
 {
