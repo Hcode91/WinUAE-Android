@@ -6,8 +6,12 @@ on:
     paths:
       - "CMakeLists.txt"
       - "86box/**"
+      - "archivers/lha/**"
+      - "blkdev_cdimage.cpp"
       - "include/**"
+      - "logging.cpp"
       - "od-unix/**"
+      - "slirp/**"
       - "specialmonitors.cpp"
       - ".github/workflows/android-port-probe.yml"
 

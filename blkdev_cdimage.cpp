@@ -14,8 +14,6 @@
 #include "sysconfig.h"
 #include "sysdeps.h"
 
-#include <sys/timeb.h>
-
 #include "options.h"
 #include "blkdev.h"
 #include "zfile.h"

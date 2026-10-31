@@ -161,7 +161,11 @@
 #include <arpa/inet.h>
 #include <sys/ioctl.h>
 #include <sys/types.h>
+#ifdef __ANDROID__
+#include "timeb_compat.h"
+#else
 #include <sys/timeb.h>
+#endif
 #include <time.h>
 
 typedef long uae_atomic;

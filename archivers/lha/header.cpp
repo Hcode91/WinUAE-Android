@@ -204,7 +204,11 @@ unix_to_generic_filename(char *name, int len)
 #endif
 
 #ifdef FTIME
+#ifdef __ANDROID__
+#include "timeb_compat.h"
+#else
 #include <sys/timeb.h>
+#endif
 #endif
 
 /*

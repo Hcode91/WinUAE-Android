@@ -1,7 +1,6 @@
-#ifndef UAE_ANDROID_SYS_TIMEB_H
-#define UAE_ANDROID_SYS_TIMEB_H
+#ifndef UAE_ANDROID_TIMEB_COMPAT_H
+#define UAE_ANDROID_TIMEB_COMPAT_H
 
-#if defined(__ANDROID__)
 #include <sys/time.h>
 #include <time.h>
 
@@ -23,8 +22,5 @@ static inline int ftime(struct timeb *value)
 	value->dstflag = 0;
 	return 0;
 }
-#else
-#include_next <sys/timeb.h>
-#endif
 
 #endif
