@@ -84,6 +84,27 @@ jobs:
         if: steps.configure.outcome == 'success'
         run: cmake --build build-android-probe --parallel 2
 
+      - name: Install Android APK packaging tools
+        if: steps.compile.outcome == 'success'
+        run: |
+          sdkmanager --install "platforms;android-36" "build-tools;36.0.0"
+          echo "$ANDROID_HOME/build-tools/36.0.0" >> "$GITHUB_PATH"
+
+      - name: Package installable Android APK
+        if: steps.compile.outcome == 'success'
+        run: |
+          mkdir -p android-app/assets
+          cp build-android-probe/libwinuae.so android-app/assets/libwinuae.so
+          SDK_JAR="$ANDROID_HOME/platforms/android-36/android.jar" bash tools/build-android-apk.sh android-app
+
+      - name: Upload installable Android APK
+        if: steps.compile.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: winuae-android-apk
+          path: android-app/build/app.apk
+          if-no-files-found: error
+
       - name: Upload Android ARM64 native library
         if: steps.compile.outcome == 'success'
         uses: actions/upload-artifact@v4
@@ -101,7 +122,7 @@ jobs:
             grep -E '^(CMAKE_SYSTEM_NAME|CMAKE_ANDROID_ARCH_ABI|ANDROID_PLATFORM|WINUAE_UNIX_WITH_[^:]+|WINUAE_UNIX_BUILD_[^:]+):' build-android-probe/CMakeCache.txt || true
           fi
           if [ "${{ steps.configure.outcome }}" = "success" ] && [ "${{ steps.compile.outcome }}" = "success" ]; then
-            echo "Android ARM64 native library build succeeded."
+            echo "Android ARM64 library and installable APK build succeeded."
           elif [ "${{ steps.configure.outcome }}" = "success" ]; then
             echo "Android configuration succeeded, but native compilation exposed the next blocker."
           else
