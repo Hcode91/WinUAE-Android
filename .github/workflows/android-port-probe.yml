@@ -1,4 +1,4 @@
-name: Android ARM64 configure probe
+name: Android ARM64 native build probe
 
 on:
   workflow_dispatch:
@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   configure-arm64:
-    name: Configure WinUAE for Android ARM64
+    name: Configure and compile WinUAE for Android ARM64
     runs-on: ubuntu-latest
     steps:
       - name: Check out WinUAE-Android
@@ -35,7 +35,7 @@ jobs:
           cmake --version
           "$ANDROID_HOME/ndk/27.2.12479018/toolchains/llvm/prebuilt/linux-x86_64/bin/clang" --version
 
-      - name: Probe existing Unix CMake project with Android toolchain
+      - name: Configure WinUAE for Android ARM64
         id: configure
         continue-on-error: true
         run: |
@@ -44,7 +44,7 @@ jobs:
             -DANDROID_ABI=arm64-v8a \
             -DANDROID_PLATFORM=android-26 \
             -DCMAKE_BUILD_TYPE=Debug \
-            -DWINUAE_UNIX_BUILD_EXECUTABLE=OFF \
+            -DWINUAE_UNIX_BUILD_EXECUTABLE=ON \
             -DWINUAE_UNIX_WITH_QT_UI=OFF \
             -DWINUAE_UNIX_WITH_INTEGRATED_QT_UI=OFF \
             -DWINUAE_UNIX_WITH_NATIVE_CD=OFF \
@@ -55,16 +55,26 @@ jobs:
             -DWINUAE_UNIX_WITH_UAENET_PCAP=OFF \
             -DWINUAE_UNIX_WITH_PPC_QEMU=OFF \
             -DWINUAE_UNIX_BUILD_QEMU_UAE_PLUGIN=OFF \
-            -DWINUAE_LZMA_SDK_FETCH=OFF
+            -DWINUAE_LZMA_SDK_FETCH=ON
 
-      - name: Summarize configure result
+      - name: Compile native Android ARM64 targets
+        id: compile
+        if: steps.configure.outcome == 'success'
+        continue-on-error: true
+        run: cmake --build build-android-probe --parallel 2
+
+      - name: Summarize actual results
         if: always()
         run: |
+          echo "Configure step: ${{ steps.configure.outcome }}"
+          echo "Compile step: ${{ steps.compile.outcome }}"
           if [ -f build-android-probe/CMakeCache.txt ]; then
             grep -E '^(CMAKE_SYSTEM_NAME|CMAKE_ANDROID_ARCH_ABI|ANDROID_PLATFORM|WINUAE_UNIX_WITH_[^:]+|WINUAE_UNIX_BUILD_[^:]+):' build-android-probe/CMakeCache.txt || true
           fi
-          if [ "${{ steps.configure.outcome }}" = "success" ]; then
-            echo "CMake configure completed. This does not yet mean the emulator can compile or run on Android."
+          if [ "${{ steps.configure.outcome }}" = "success" ] && [ "${{ steps.compile.outcome }}" = "success" ]; then
+            echo "Android ARM64 native build succeeded. This is not yet an installable Android APK."
+          elif [ "${{ steps.configure.outcome }}" = "success" ]; then
+            echo "Android configuration succeeded, but native compilation exposed the next blocker."
           else
-            echo "CMake configure did not complete. Inspect the configure log above to identify the first Android-specific blocker."
+            echo "Android configuration is still blocked. See the first CMake error above."
           fi
