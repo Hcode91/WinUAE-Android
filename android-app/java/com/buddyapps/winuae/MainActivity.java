@@ -75,18 +75,25 @@ public final class MainActivity extends Activity implements SurfaceHolder.Callba
     private boolean loadCore() {
         try {
             File dir = getDir("native", MODE_PRIVATE);
-            File lib = new File(dir, "libwinuae.so");
-            try (InputStream in = getAssets().open("libwinuae.so");
-                 FileOutputStream out = new FileOutputStream(lib)) {
-                byte[] buffer = new byte[32768]; int n;
-                while ((n = in.read(buffer)) >= 0) out.write(buffer, 0, n);
+            int version = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+            File lib = new File(dir, "libwinuae-" + version + ".so");
+            if (!lib.isFile() || lib.length() < 1024 * 1024) {
+                File temporary = new File(dir, lib.getName() + ".tmp");
+                temporary.delete();
+                try (InputStream in = getAssets().open("libwinuae.so");
+                     FileOutputStream out = new FileOutputStream(temporary)) {
+                    byte[] buffer = new byte[32768]; int n;
+                    while ((n = in.read(buffer)) >= 0) out.write(buffer, 0, n);
+                    out.getFD().sync();
+                }
+                if (!temporary.renameTo(lib)) throw new java.io.IOException("Could not save native core");
             }
             lib.setReadable(true, false);
             lib.setWritable(false, false);
             System.load(lib.getAbsolutePath());
             return true;
         } catch (Exception | UnsatisfiedLinkError e) {
-            status.setText("Android native core is missing; build the ARM64 APK first");
+            status.setText("WinUAE ARM64 core missing: " + (e.getMessage() == null ? "load failed" : e.getMessage()));
             return false;
         }
     }
