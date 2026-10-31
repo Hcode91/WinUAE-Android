@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - "CMakeLists.txt"
+      - "86box/**"
       - "include/**"
       - "od-unix/**"
       - "specialmonitors.cpp"
