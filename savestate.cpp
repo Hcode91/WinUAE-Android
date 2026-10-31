@@ -66,6 +66,10 @@
 #include "fsdb.h"
 #include "gfxboard.h"
 
+#ifdef __ANDROID__
+extern "C" int winuae_android_take_state_request(TCHAR *path, int size);
+#endif
+
 int savestate_state = 0;
 int savestate_last_save_result = -1;
 static int savestate_first_capture;
@@ -1401,9 +1405,19 @@ void savestate_quick(int slot, int save)
 bool savestate_check(void)
 {
 	if (vpos == 0 && !savestate_state) {
-		if (hsync_counter == 0 && input_play == INPREC_PLAY_NORMAL)
-			savestate_memorysave ();
-		savestate_capture (0);
+#ifdef __ANDROID__
+		TCHAR android_state_path[MAX_DPATH];
+		int android_state_action = winuae_android_take_state_request(android_state_path, MAX_DPATH);
+		if (android_state_action) {
+			savestate_initsave(android_state_path, 1, true, false);
+			savestate_state = android_state_action;
+		}
+#endif
+		if (!savestate_state) {
+			if (hsync_counter == 0 && input_play == INPREC_PLAY_NORMAL)
+				savestate_memorysave();
+			savestate_capture (0);
+		}
 	}
 	if (savestate_state == STATE_DORESTORE) {
 		savestate_state = STATE_RESTORE;

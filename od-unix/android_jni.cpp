@@ -6,8 +6,12 @@
 #include "traps.h"
 #include "input.h"
 #include "inputdevice.h"
+#include "savestate.h"
 #include "uae.h"
+#include <algorithm>
 #include <atomic>
+#include <cstring>
+#include <mutex>
 #include <string>
 #include <thread>
 #include <vector>
@@ -22,6 +26,23 @@ extern void unix_input_keyboard_key(int scancode, bool pressed, int lockstate);
 
 static std::thread emulator_thread;
 static std::atomic<bool> running{false};
+static std::mutex state_request_mutex;
+static std::string state_request_path;
+static int state_request_action;
+
+extern "C" int winuae_android_take_state_request(TCHAR *path, int size)
+{
+    std::lock_guard<std::mutex> guard(state_request_mutex);
+    if (!state_request_action || !path || size < 2) return 0;
+    const size_t count = std::min(state_request_path.size(), static_cast<size_t>(size - 1));
+    std::memcpy(path, state_request_path.data(), count);
+    path[count] = 0;
+    int action = state_request_action;
+    state_request_action = 0;
+    state_request_path.clear();
+    return action;
+}
+
 static std::string java_string(JNIEnv *env, jstring value)
 {
     if (!value) return {};
@@ -96,4 +117,17 @@ Java_com_buddyapps_winuae_MainActivity_nativeWarp(JNIEnv *, jclass, jboolean dow
 {
     if (!running.load()) return;
     send_input_event(INPUTEVENT_SPC_WARP, down == JNI_TRUE ? 1 : 0, 1, 0);
+}
+
+extern "C" JNIEXPORT jboolean JNICALL
+Java_com_buddyapps_winuae_MainActivity_nativeState(JNIEnv *env, jclass, jstring path, jboolean load)
+{
+    if (!running.load()) return JNI_FALSE;
+    const std::string filename = java_string(env, path);
+    if (filename.empty() || filename.size() >= MAX_DPATH) return JNI_FALSE;
+    std::lock_guard<std::mutex> guard(state_request_mutex);
+    if (state_request_action) return JNI_FALSE;
+    state_request_path = filename;
+    state_request_action = load == JNI_TRUE ? STATE_DORESTORE : STATE_SAVE;
+    return JNI_TRUE;
 }
