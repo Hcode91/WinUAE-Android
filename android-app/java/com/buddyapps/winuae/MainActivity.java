@@ -27,6 +27,7 @@ public final class MainActivity extends Activity implements SurfaceHolder.Callba
     private static native void nativeKey(int code, boolean down);
     private static native void nativeJoystick(int control, boolean down);
     private static native void nativeWarp(boolean down);
+    private static native boolean nativeState(String path, boolean load);
     private SurfaceView screen;
     private TextView status;
     private Button fullscreenButton;
@@ -84,6 +85,11 @@ public final class MainActivity extends Activity implements SurfaceHolder.Callba
         });
         keys.addView(fastForward);
         root.addView(keys, new LinearLayout.LayoutParams(-1, -2));
+        LinearLayout states = new LinearLayout(this);
+        states.setGravity(Gravity.CENTER);
+        states.addView(button("Save state", v -> saveState()));
+        states.addView(button("Load state", v -> loadState()));
+        root.addView(states, new LinearLayout.LayoutParams(-1, -2));
         setContentView(root);
         coreLoaded = loadCore();
         File savedRom = new File(getFilesDir(), "kick.rom");
@@ -135,6 +141,27 @@ public final class MainActivity extends Activity implements SurfaceHolder.Callba
         if (!coreLoaded || !started || fastForwardHeld == enabled) return;
         fastForwardHeld = enabled;
         nativeWarp(enabled);
+    }
+    private File stateFile() { return new File(getFilesDir(), "quick.uss"); }
+    private void saveState() {
+        if (!coreLoaded || !started) {
+            Toast.makeText(this, "Start the emulator before saving", Toast.LENGTH_SHORT).show();
+        } else if (nativeState(stateFile().getAbsolutePath(), false)) {
+            Toast.makeText(this, "Saving state…", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Could not queue save state", Toast.LENGTH_LONG).show();
+        }
+    }
+    private void loadState() {
+        if (!coreLoaded || !started) {
+            Toast.makeText(this, "Start the emulator before loading", Toast.LENGTH_SHORT).show();
+        } else if (!stateFile().isFile()) {
+            Toast.makeText(this, "No saved state yet", Toast.LENGTH_SHORT).show();
+        } else if (nativeState(stateFile().getAbsolutePath(), true)) {
+            Toast.makeText(this, "Loading state…", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Could not queue load state", Toast.LENGTH_LONG).show();
+        }
     }
     private Button keyButton(String title, int code, int control) {
         Button b = button(title, v -> { });
