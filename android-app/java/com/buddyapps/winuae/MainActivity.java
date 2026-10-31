@@ -26,11 +26,13 @@ public final class MainActivity extends Activity implements SurfaceHolder.Callba
     private static native void nativeMouse(int dx, int dy, boolean down);
     private static native void nativeKey(int code, boolean down);
     private static native void nativeJoystick(int control, boolean down);
+    private static native void nativeWarp(boolean down);
     private SurfaceView screen;
     private TextView status;
     private Button fullscreenButton;
     private String romPath = "", diskPath = "";
     private boolean started;
+    private boolean fastForwardHeld;
     private boolean fullscreen;
     private float lastX, lastY;
     private boolean havePointer;
@@ -67,6 +69,20 @@ public final class MainActivity extends Activity implements SurfaceHolder.Callba
         keys.addView(keyButton("←", 80, 0)); keys.addView(keyButton("↓", 81, 1));
         keys.addView(keyButton("↑", 82, 2)); keys.addView(keyButton("→", 79, 3));
         keys.addView(keyButton("Fire", -1, 4));
+        Button fastForward = button("Fast", v -> { });
+        fastForward.setContentDescription("Hold for fast forward");
+        fastForward.setOnTouchListener((v, e) -> {
+            if (e.getAction() == MotionEvent.ACTION_DOWN) {
+                setFastForward(true);
+                return true;
+            }
+            if (e.getAction() == MotionEvent.ACTION_UP || e.getAction() == MotionEvent.ACTION_CANCEL) {
+                setFastForward(false);
+                return true;
+            }
+            return true;
+        });
+        keys.addView(fastForward);
         root.addView(keys, new LinearLayout.LayoutParams(-1, -2));
         setContentView(root);
         coreLoaded = loadCore();
@@ -114,6 +130,11 @@ public final class MainActivity extends Activity implements SurfaceHolder.Callba
                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
         getWindow().getDecorView().setSystemUiVisibility(enabled ? flags : View.SYSTEM_UI_FLAG_VISIBLE);
         fullscreenButton.setText(enabled ? "Exit full" : "Full screen");
+    }
+    private void setFastForward(boolean enabled) {
+        if (!coreLoaded || !started || fastForwardHeld == enabled) return;
+        fastForwardHeld = enabled;
+        nativeWarp(enabled);
     }
     private Button keyButton(String title, int code, int control) {
         Button b = button(title, v -> { });
@@ -172,7 +193,10 @@ public final class MainActivity extends Activity implements SurfaceHolder.Callba
         status.setText("WinUAE running • touch the display to move the mouse");
     }
     private void stopEmulator() {
-        if (started) { nativeStop(); started = false; updateStatus(); }
+        if (started) {
+            setFastForward(false);
+            nativeStop(); started = false; updateStatus();
+        }
     }
     private boolean touchScreen(View view, MotionEvent event) {
         if (!coreLoaded || !started) return true;
