@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - "CMakeLists.txt"
+      - "include/**"
       - "od-unix/**"
       - ".github/workflows/android-port-probe.yml"
 
