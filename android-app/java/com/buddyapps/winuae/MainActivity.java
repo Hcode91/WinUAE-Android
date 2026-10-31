@@ -25,6 +25,7 @@ public final class MainActivity extends Activity implements SurfaceHolder.Callba
     private static native void nativeStop();
     private static native void nativeMouse(int dx, int dy, boolean down);
     private static native void nativeKey(int code, boolean down);
+    private static native void nativeJoystick(int control, boolean down);
     private SurfaceView screen;
     private TextView status;
     private String romPath = "", diskPath = "";
@@ -58,9 +59,9 @@ public final class MainActivity extends Activity implements SurfaceHolder.Callba
         root.addView(screen, new LinearLayout.LayoutParams(-1, 0, 1));
         LinearLayout keys = new LinearLayout(this);
         keys.setGravity(Gravity.CENTER);
-        keys.addView(keyButton("←", 80)); keys.addView(keyButton("↓", 81));
-        keys.addView(keyButton("↑", 82)); keys.addView(keyButton("→", 79));
-        keys.addView(keyButton("Fire", -1));
+        keys.addView(keyButton("←", 80, 0)); keys.addView(keyButton("↓", 81, 1));
+        keys.addView(keyButton("↑", 82, 2)); keys.addView(keyButton("→", 79, 3));
+        keys.addView(keyButton("Fire", -1, 4));
         root.addView(keys, new LinearLayout.LayoutParams(-1, -2));
         setContentView(root);
         coreLoaded = loadCore();
@@ -101,15 +102,19 @@ public final class MainActivity extends Activity implements SurfaceHolder.Callba
     private Button button(String title, View.OnClickListener action) {
         Button b = new Button(this); b.setText(title); b.setOnClickListener(action); return b;
     }
-    private Button keyButton(String title, int code) {
-        Button b = button(title, v -> { if (code >= 0) nativeKey(code, true); else nativeMouse(0, 0, true); });
+    private Button keyButton(String title, int code, int control) {
+        Button b = button(title, v -> { });
         b.setOnTouchListener((v, e) -> {
             if (e.getAction() == MotionEvent.ACTION_DOWN) {
-                if (code >= 0) nativeKey(code, true); else nativeMouse(0, 0, true);
+                if (code >= 0) nativeKey(code, true);
+                else { nativeMouse(0, 0, true); nativeKey(228, true); }
+                nativeJoystick(control, true);
                 return true;
             }
             if (e.getAction() == MotionEvent.ACTION_UP || e.getAction() == MotionEvent.ACTION_CANCEL) {
-                if (code >= 0) nativeKey(code, false); else nativeMouse(0, 0, false);
+                if (code >= 0) nativeKey(code, false);
+                else { nativeMouse(0, 0, false); nativeKey(228, false); }
+                nativeJoystick(control, false);
                 return true;
             }
             return true;

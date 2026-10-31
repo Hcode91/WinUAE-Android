@@ -3,6 +3,7 @@
 #include "sysdeps.h"
 #include "target_main.h"
 #include "input.h"
+#include "inputdevice.h"
 #include "uae.h"
 #include <atomic>
 #include <string>
@@ -70,3 +71,20 @@ Java_com_buddyapps_winuae_MainActivity_nativeMouse(JNIEnv *, jclass, jint dx, ji
 extern "C" JNIEXPORT void JNICALL
 Java_com_buddyapps_winuae_MainActivity_nativeKey(JNIEnv *, jclass, jint code, jboolean down)
 { unix_input_keyboard_key(code, down == JNI_TRUE, 0); }
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_buddyapps_winuae_MainActivity_nativeJoystick(JNIEnv *, jclass, jint control, jboolean down)
+{
+    static const int port0[] = {
+        INPUTEVENT_JOY1_LEFT, INPUTEVENT_JOY1_DOWN, INPUTEVENT_JOY1_UP,
+        INPUTEVENT_JOY1_RIGHT, INPUTEVENT_JOY1_FIRE_BUTTON
+    };
+    static const int port1[] = {
+        INPUTEVENT_JOY2_LEFT, INPUTEVENT_JOY2_DOWN, INPUTEVENT_JOY2_UP,
+        INPUTEVENT_JOY2_RIGHT, INPUTEVENT_JOY2_FIRE_BUTTON
+    };
+    if (control < 0 || control >= 5) return;
+    int pressed = down == JNI_TRUE ? 1 : 0;
+    send_input_event(port0[control], pressed, 1, 0);
+    send_input_event(port1[control], pressed, 1, 0);
+}
