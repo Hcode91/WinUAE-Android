@@ -28,8 +28,10 @@ public final class MainActivity extends Activity implements SurfaceHolder.Callba
     private static native void nativeJoystick(int control, boolean down);
     private SurfaceView screen;
     private TextView status;
+    private Button fullscreenButton;
     private String romPath = "", diskPath = "";
     private boolean started;
+    private boolean fullscreen;
     private float lastX, lastY;
     private boolean havePointer;
 
@@ -51,6 +53,9 @@ public final class MainActivity extends Activity implements SurfaceHolder.Callba
         bar.addView(button("Disk image", v -> pick(PICK_DISK)));
         bar.addView(button("Start", v -> startEmulator()));
         bar.addView(button("Stop", v -> stopEmulator()));
+        fullscreenButton = button("Full screen", v -> setFullscreen(!fullscreen));
+        fullscreenButton.setContentDescription("Toggle full screen");
+        bar.addView(fullscreenButton);
         root.addView(bar, new LinearLayout.LayoutParams(-1, -2));
         screen = new SurfaceView(this);
         screen.getHolder().addCallback(this);
@@ -101,6 +106,14 @@ public final class MainActivity extends Activity implements SurfaceHolder.Callba
 
     private Button button(String title, View.OnClickListener action) {
         Button b = new Button(this); b.setText(title); b.setOnClickListener(action); return b;
+    }
+    private void setFullscreen(boolean enabled) {
+        fullscreen = enabled;
+        int flags = View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
+        getWindow().getDecorView().setSystemUiVisibility(enabled ? flags : View.SYSTEM_UI_FLAG_VISIBLE);
+        fullscreenButton.setText(enabled ? "Exit full" : "Full screen");
     }
     private Button keyButton(String title, int code, int control) {
         Button b = button(title, v -> { });
