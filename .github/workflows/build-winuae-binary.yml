@@ -2,12 +2,6 @@ name: Build WinUAE binary
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
 
 env:
   SOLUTION_FILE_PATH: od-win32\\winuae_msvc15
